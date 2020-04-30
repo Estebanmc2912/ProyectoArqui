@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="DatosEar">
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="Entidades.jar" deploy-path="/lib" handle="module:/resource/Entidades/Entidades">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="FachadaDatos.jar" deploy-path="/" handle="module:/resource/FachadaDatos/FachadaDatos">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="FachadaDatosClient.jar" deploy-path="/" handle="module:/resource/FachadaDatosClient/FachadaDatosClient">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>
