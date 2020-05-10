@@ -19,14 +19,12 @@ import model.Producto;
 public class ServiciosCatalogo implements ServiciosCatalogoLocal {
 	@EJB DelegadoDatosLocal dl;
 	private List<Producto> Catalogo;
-	private List<Producto> Carro;
 	private int numPag;
     /**
      * Default constructor. 
      */
     public ServiciosCatalogo() {
         this.Catalogo=new ArrayList<Producto>();
-        this.Carro=new ArrayList<Producto>();
         this.numPag=0;
     }
 	@Override

@@ -106,4 +106,16 @@ public class FachadaD implements FachadaDRemote {
 	 
 	}
 
+	@Override
+	public void presistCompra(Factura factura) {
+		for (Producto p:factura.getProductos()) {
+			Producto prod=entityManager.find(Producto.class, p.getIdproducto());
+			prod.setCantidad(prod.getCantidad()-1);
+			entityManager.merge(prod);
+		}
+		entityManager.persist(factura);
+		
+	
+	}
+
 }

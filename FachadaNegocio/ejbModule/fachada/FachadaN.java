@@ -83,7 +83,7 @@ public class FachadaN implements FachadaNRemote {
 	}
 
 	@Override
-	public int realizarCompra(List<Producto> carro, Usuario u) {
-		return scom.realizarCompra(carro,u);
+	public int realizarCompra(List<Producto> carro, Usuario u,int tot) {
+		return scom.realizarCompra(carro,u,tot);
 	}
 }

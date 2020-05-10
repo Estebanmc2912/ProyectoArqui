@@ -19,7 +19,15 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/glassfish5/glassfish/lib/gf-client.jar"/>
-	<classpathentry exported="true" kind="lib" path="D:/glassfish5/glassfish/lib/javaee.jar"/>
+	<classpathentry kind="lib" path="D:/wildfly-10.1.0.Final/bin/client/jboss-client.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/wildfly-10.1.0.Final/jboss-modules.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

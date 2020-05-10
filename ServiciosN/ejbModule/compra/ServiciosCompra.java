@@ -1,34 +1,45 @@
 package compra;
 
+
 import java.io.Serializable;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-/*
+
 import javax.jms.JMSException;
+import javax.jms.Message;
 import javax.jms.ObjectMessage;
+import javax.jms.Queue;
+import javax.jms.QueueConnection;
+import javax.jms.QueueConnectionFactory;
 import javax.jms.QueueSender;
 import javax.jms.QueueSession;
 import javax.jms.Session;
 import javax.jms.TextMessage;
+import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-*/
+
+
+
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
 import com.stripe.model.Token;
-/*
-import com.sun.messaging.Queue;
-import com.sun.messaging.QueueConnectionFactory;
-import com.sun.messaging.jms.QueueConnection;
-*/
+
+
 import ldatos.DelegadoDatosLocal;
+import model.Factura;
 import model.Producto;
 import model.Usuario;
 
@@ -90,67 +101,54 @@ public class ServiciosCompra implements ServiciosCompraLocal {
 
 
 	@Override
-	public int realizarCompra(List<Producto> carro, Usuario u) {
-		/* List<TextMessage> infoFactura=new ArrayList<TextMessage>();
-		 int  total=0;
-		 InitialContext ctx=null;
-		 QueueConnectionFactory queueConnectionFactory;
-		 QueueConnection queueConnection= null;
-		 QueueSession queueSession;
-		 QueueSender queueSender;
+	public int realizarCompra(List<Producto> carro, Usuario u,int tot) {
+		java.util.Date date = new java.util.Date();
+		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		 String usuario="jonathan";
+		 String contraseña="19890531";
+		 String CONNECTION_FACTORY="jms/RemoteConnectionFactory";
+		 String DESTINATION="jms/queue/ProyectQueue"; 
+		 Properties env=new Properties();
+		 env.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
+		 env.put(Context.PROVIDER_URL, "http-remoting://localhost:8086");
+		 env.put(Context.SECURITY_PRINCIPAL, usuario);
+		 env.put(Context.SECURITY_CREDENTIALS, contraseña);
+		 env.put("jboss.naming.client.ejb.context", true);
+		 InitialContext ic=null;
+		 QueueConnectionFactory connectionFactory;
+		 QueueConnection connection = null;
+		 QueueSession session;
 		 Queue queue;
+		 QueueSender sender;
 		 TextMessage msg;
 		 ObjectMessage obj;
-
+		 Factura factura=new Factura();
+		 factura.setProductos(carro);
+		 factura.setCorreo(u.getCorreo());
+		 factura.setNombreCli(u.getNombres());
+		 factura.setApeCli(u.getApellidos());
+		 factura.setTotal(tot);
+		 factura.setFecha(sqlDate);
 		 try {
-			 ctx=new InitialContext();
-			 queueConnectionFactory =(QueueConnectionFactory) ctx.lookup("jms/ProyectConnectionFactory");
-			 queueConnection= (QueueConnection)queueConnectionFactory.createQueueConnection();
-			 queueConnection.start();
-			 queueSession=queueConnection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
-			 queue=(Queue)ctx.lookup("jms/ProyectQueue");
-			 queueSender=queueSession.createSender(queue);
-			 
-			 msg=queueSession.createTextMessage();
-			 obj=queueSession.createObjectMessage();
-			 msg.setText(u.getCorreo());
-			 infoFactura.add(msg);
-			 msg.setText("Transaccion confirmada");
-			 infoFactura.add(msg);
-			 msg.setText("Cliente: "+u.getNombres()+" "+u.getApellidos());
-			 infoFactura.add(msg);
-			 for(Producto p:carro) {
-				 msg.setText("Producto: "+p.getNombre());
-				 infoFactura.add(msg);
-				 msg.setText("Descripcion: "+p.getDescripcion());
-				 infoFactura.add(msg);
-				 msg.setText("Precio: "+p.getDescripcion());
-				 infoFactura.add(msg);
-				 total=total+p.getPrecio();
-			 }
-			 msg.setText("total pagado: "+total);
-			 infoFactura.add(msg);
-			 obj.setObject((Serializable) infoFactura);
-			 queueSender.send(obj);
-			 
-			 queueSender.close();
-			 queueSession.close();
-			 
-		 }catch(NamingException | JMSException e) {
-			 e.printStackTrace();
-			 return 0;
-		 }finally {
-			 if(queueConnection != null) {
-				 try {
-					 queueConnection.close();
-				 }catch(JMSException jsme) {
-					 System.out.println("error: "+jsme.toString());
-				 }
-			 }
-		 }
-		return 1;
-	}
-*/
-		return 0;
+			ic = new InitialContext(env);			
+			connectionFactory = (QueueConnectionFactory) ic.lookup(CONNECTION_FACTORY);
+			connection = connectionFactory.createQueueConnection(usuario, contraseña);
+			connection.start();
+			queue = (javax.jms.Queue) ic.lookup(DESTINATION);
+			session = connection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+			sender = session.createSender(queue);
+			obj= session.createObjectMessage();
+			msg = session.createTextMessage();
+			obj.setObject(factura);
+			sender.send(obj);
+			sender.close();
+			session.close();
+			connection.close();
+			dl.persistCompra(factura);
+		} catch (NamingException | JMSException e1) {			
+			e1.printStackTrace();
+			return 0;
+		}
+		 return 1;
 	}
 }

@@ -101,4 +101,11 @@ public class DelegadoDatos implements DelegadoDatosLocal {
 		return services.ActualizarUsuario(u);
 	}
 
+	@Override
+	public void persistCompra(Factura factura) {
+		FachadaDRemote services=sl.getService();
+		services.presistCompra(factura);
+		
+	}
+
 }

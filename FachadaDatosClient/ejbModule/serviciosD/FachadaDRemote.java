@@ -14,4 +14,5 @@ public interface FachadaDRemote {
 	public List<Proveedor> getAllProveedores();
 	public List<Producto> getProductos(int pag);
 	public String ActualizarUsuario(Usuario u);
+	public void presistCompra(Factura factura);
 }

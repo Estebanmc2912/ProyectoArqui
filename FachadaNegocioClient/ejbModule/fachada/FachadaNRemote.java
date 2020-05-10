@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
-import com.stripe.model.PaymentIntent;
 
 import model.*;
 
@@ -19,6 +18,6 @@ public interface FachadaNRemote {
 	public List<Usuario> ListarUsuarios();
 	public List<Producto> verCatalogo(int pag);
 	public Usuario confirmarCompra(String year,String mes, String num, String cod,Usuario u);
-	public int realizarCompra(List<Producto> carro, Usuario u);
+	public int realizarCompra(List<Producto> carro, Usuario u,int tot);
 
 }

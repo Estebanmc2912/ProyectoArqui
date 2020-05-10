@@ -5,18 +5,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import com.stripe.model.PaymentIntent;
-
-import com.google.gson.Gson;
-
-
 
 
 import fachada.FachadaNRemote;
@@ -120,7 +109,7 @@ public class Principal {
 		return op;
 	}
 	private static int manejoUsuario(FachadaNRemote serviciosn,Usuario u) throws IOException {
-		List<Producto> carrito=new ArrayList();
+		List<Producto> carrito=new ArrayList<Producto>();
 		int op=0;
 		int total=0;
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -143,10 +132,9 @@ public class Principal {
 			case 3:
 				int pag=0;
 				int occ=0,occ2=0;
-				int opcion=0;
 				int codProd=0;
+				boolean esta=false;
 		
-				List<Producto> carro;
 				do {
 					pag=pag+1;
 				List<Producto> prod=serviciosn.verCatalogo(pag);	
@@ -155,20 +143,35 @@ public class Principal {
 					p=prod.get(i);
 					System.out.println("id: "+p.getIdproducto()+"  Producto: "+p.getNombre()+" Descripcion: "+p.getDescripcion()+" Precio: "+p.getPrecio()+"\n");
 				}
-				do {
+	
 					System.out.println("1. Seleccionar un producto para comprar");
 					System.out.println("2. Ver la siguiente pagina de productos");
 					System.out.println("3. Ver carrito de compras");
+					System.out.println("4. Salir");
 					occ=Integer.parseInt(br.readLine());
 					if(occ==1) {
 						System.out.println("Digite el codigo para agregarlo a su carro de compras");
-						opcion=Integer.parseInt(br.readLine());
+						codProd=Integer.parseInt(br.readLine());
 						for(int i=0;i<prod.size();i++) {
-							if(prod.get(i).getIdproducto()==opcion) {
-								carrito.add(prod.get(i));
-								total=total+prod.get(i).getPrecio();
+							if(prod.get(i).getIdproducto()==codProd) {
+								if(prod.get(i).getCantidad()>0) {
+									carrito.add(prod.get(i));
+									total=total+prod.get(i).getPrecio();
+									esta=true;
+								}else {
+									System.out.println("Por ahora no quedan unidades disponibles del producto");
+								}
+								
 							}
+							
 						}
+						
+						if(esta==false) {
+							System.out.println("Error en el codigo");
+						}else {
+							esta=false;
+						}
+						pag=pag-1;
 					}else if(occ==3) {
 						for(Producto pro:carrito) {
 							System.out.println("id: "+pro.getIdproducto()+"  Producto: "+pro.getNombre()+" Descripcion: "+pro.getDescripcion()+" Precio: "+pro.getPrecio()+"\n");
@@ -178,14 +181,14 @@ public class Principal {
 						System.out.println("2. Seguir mirando productos");
 						occ2=Integer.parseInt(br.readLine());
 						if(occ2==1) {
-							u=realizarCompra(carrito,serviciosn,u);
-						}else if(occ2==2) {
-							occ=2;
-						
+							u=realizarCompra(carrito,serviciosn,u,total);
+							carrito.clear();
+							total=0;
+							pag=0;
 						}
 					}
-					}while(occ2==1);
-				}while(occ==2);
+					
+				}while(occ!=4);
 				break;
 			case 4:
 				
@@ -197,7 +200,7 @@ public class Principal {
 		}while(op!=4);
 		return op;
 	}
-	private static Usuario realizarCompra(List<Producto> carro,FachadaNRemote serviciosn,Usuario u) throws NumberFormatException, IOException {
+	private static Usuario realizarCompra(List<Producto> carro,FachadaNRemote serviciosn,Usuario u, int total) throws NumberFormatException, IOException {
 		int op,fn=0;
 		String num,cod,mes,year;
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -225,7 +228,12 @@ public class Principal {
 			op=Integer.parseInt(br.readLine());
 			if(op==1) {
 				System.out.println("Realizando la transaccion");
-				fn=serviciosn.realizarCompra(carro,u);
+				fn=serviciosn.realizarCompra(carro,u,total);
+				if(fn==1) {
+					System.out.println("Transaccion realizada con exito,  la informacion de compra ha sido enviada a su correo");
+				}else {
+					System.out.println("Error en la transaccion");
+				}
 			}
 		}
 		return u;

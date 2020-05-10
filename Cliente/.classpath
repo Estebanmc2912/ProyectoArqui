@@ -3,11 +3,9 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Entidades"/>
-	<classpathentry kind="lib" path="D:/wildfly-19.0.0.Final/bin/client/jboss-client.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/FachadaNegocioClient"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Asus/Downloads/gson-2.8.6.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Asus/Downloads/stripe-java-19.5.0.jar"/>
-	<classpathentry kind="lib" path="D:/glassfish5/glassfish/lib/gf-client.jar"/>
-	<classpathentry kind="lib" path="D:/glassfish5/glassfish/lib/javaee.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/FachadaNegocioClient"/>
+	<classpathentry kind="lib" path="D:/wildfly-15.0.1.Final/jboss-modules.jar"/>
+	<classpathentry kind="lib" path="D:/wildfly-15.0.1.Final/bin/client/jboss-client.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

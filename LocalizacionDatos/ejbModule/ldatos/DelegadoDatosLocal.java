@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import model.Factura;
 import model.Producto;
 import model.Proveedor;
 import model.Usuario;
@@ -19,4 +20,5 @@ public interface DelegadoDatosLocal {
 	public List<Usuario> ListarUsuarios();
 	public List<Producto> getProductos(int i);
 	public String ActualizarUsuario(Usuario u);
+	public void persistCompra(Factura factura);
 }
