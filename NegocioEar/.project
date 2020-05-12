@@ -3,12 +3,12 @@
 	<name>NegocioEar</name>
 	<comment></comment>
 	<projects>
-		<project>FachadaNegocio</project>
-		<project>FachadaNegocioClient</project>
 		<project>Entidades</project>
-		<project>LocalizacionDatos</project>
 		<project>FachadaDatosClient</project>
 		<project>ServiciosN</project>
+		<project>FachadaNeg</project>
+		<project>FachadaNegClient</project>
+		<project>Localizacion</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

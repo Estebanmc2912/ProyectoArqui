@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="NegocioEar">
         <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
-        <dependent-module archiveName="FachadaNegocio.jar" deploy-path="/" handle="module:/resource/FachadaNegocio/FachadaNegocio">
-            <dependent-object/>
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="FachadaNegocioClient.jar" deploy-path="/" handle="module:/resource/FachadaNegocioClient/FachadaNegocioClient">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="Entidades.jar" deploy-path="/lib" handle="module:/resource/Entidades/Entidades">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="LocalizacionDatos.jar" deploy-path="/" handle="module:/resource/LocalizacionDatos/LocalizacionDatos">
-            <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="FachadaDatosClient.jar" deploy-path="/lib" handle="module:/resource/FachadaDatosClient/FachadaDatosClient">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="ServiciosN.jar" deploy-path="/" handle="module:/resource/ServiciosN/ServiciosN">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="FachadaNeg.jar" deploy-path="/" handle="module:/resource/FachadaNeg/FachadaNeg">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="FachadaNegClient.jar" deploy-path="/" handle="module:/resource/FachadaNegClient/FachadaNegClient">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="Localizacion.jar" deploy-path="/" handle="module:/resource/Localizacion/Localizacion">
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
